@@ -59,6 +59,15 @@ void twistCallback(const geometry_msgs::TwistStampedConstPtr &input_msg)
     oper_msg.set__from(0);
     oper_msg.set__result(1);
     send_msg();
+
+    oper_msg.set__seqno(seq_num++);
+    oper_msg.set__to(1);
+    oper_msg.set__name("Target_Angular");
+    oper_msg.set__value(input_msg->twist.angular.z);
+    oper_msg.set__msg("from Autoware");
+    oper_msg.set__from(0);
+    oper_msg.set__result(1);
+    send_msg();
 }
 
 int main(int argc, char**argv)
