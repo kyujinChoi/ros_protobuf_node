@@ -11,6 +11,7 @@ add_compile_options(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  geometry_msgs
 )
 
 find_package(Protobuf REQUIRED)
@@ -18,7 +19,7 @@ find_package(Protobuf REQUIRED)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ros_proxy
-  CATKIN_DEPENDS roscpp std_msgs
+  CATKIN_DEPENDS roscpp std_msgs geometry_msgs
   DEPENDS system_lib
 )
 

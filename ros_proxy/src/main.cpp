@@ -9,6 +9,8 @@
 #include <arpa/inet.h>
 #include "ros/ros.h"
 #include "ros_proxy/umsg.pb.h"
+#include <geometry_msgs/TwistStamped.h>
+
 
 #include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
@@ -26,6 +28,7 @@ vcf::Operational_msg oper_msg;
 char message[BUF_SIZE] ;
 int idx=0;
 int halfsd;
+int seq_num=0;
 void send_msg()
 {
     int siz;
@@ -46,11 +49,24 @@ void send_msg()
     usleep(1);
 }
 
+void twistCallback(const geometry_msgs::TwistStampedConstPtr &input_msg)
+{
+    oper_msg.set__seqno(seq_num++);
+    oper_msg.set__to(1);
+    oper_msg.set__name("Target_Velocity");
+    oper_msg.set__value(input_msg->twist.linear.x);
+    oper_msg.set__msg("from Autoware");
+    oper_msg.set__from(0);
+    oper_msg.set__result(1);
+    send_msg();
+}
+
 int main(int argc, char**argv)
 {
     ros::init(argc, argv,"ros_proxy_node");
     ros::NodeHandle nh;
     
+    ros::Subscriber proxy_sub = nh.subscribe("/twist_cmd",1,twistCallback);
     
     struct sockaddr_in server_addr;
 
@@ -69,26 +85,7 @@ int main(int argc, char**argv)
     
     printf("connected...\n");
     
-    
-    int str_len, recv_len, recv_cnt;
-    int i,result;
-    int count=0;
-    
-    sleep(1);
-    while(1)
-    {
-        //sprintf(message, "Message from client %d", count++);    
-        //str_len=write(halfsd, message, strlen(message));
-        //message[str_len] = 0;
-        oper_msg.set__seqno(1);
-        oper_msg.set__to(1);
-        oper_msg.set__name("Ecat_State");
-        oper_msg.set__value(count++);
-        oper_msg.set__msg("ecatup");
-        oper_msg.set__from(0);
-        oper_msg.set__result(1);
-        send_msg();
-        sleep(1);
-    }
+    ros::spin();
+
 }
 
