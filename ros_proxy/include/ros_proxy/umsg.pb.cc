@@ -195,11 +195,11 @@ static void AddDescriptorsImpl() {
       " \001(\005\022\014\n\004_msg\030\004 \001(\t\022!\n\003cmd\030\005 \003(\0132\024.vcf.In"
       "itial_msg.Cmd\022!\n\003prm\030\006 \003(\0132\024.vcf.Initial"
       "_msg.Prm\022\016\n\006_cycle\030\007 \001(\r\0323\n\003Cmd\022\r\n\005_from"
-      "\030\001 \001(\r\022\r\n\005_name\030\002 \001(\t\022\016\n\006_value\030\004 \001(\005\0323\n"
+      "\030\001 \001(\r\022\r\n\005_name\030\002 \001(\t\022\016\n\006_value\030\004 \001(\001\0323\n"
       "\003Prm\022\020\n\010_vartype\030\001 \001(\r\022\014\n\004_min\030\002 \001(\005\022\014\n\004"
       "_max\030\003 \001(\005\"{\n\017Operational_msg\022\016\n\006_seqNo\030"
       "\001 \001(\r\022\r\n\005_from\030\002 \001(\r\022\013\n\003_to\030\003 \001(\r\022\r\n\005_na"
-      "me\030\004 \001(\t\022\016\n\006_value\030\005 \001(\005\022\017\n\007_result\030\006 \001("
+      "me\030\004 \001(\t\022\016\n\006_value\030\005 \001(\001\022\017\n\007_result\030\006 \001("
       "\005\022\014\n\004_msg\030\007 \001(\tB\035\n\017com.rubicom.vcfB\nUmsg"
       "Protosb\006proto3"
   };
@@ -247,17 +247,17 @@ Initial_msg_Cmd::Initial_msg_Cmd(const Initial_msg_Cmd& from)
   if (from._name().size() > 0) {
     _name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from._name_);
   }
-  ::memcpy(&_from_, &from._from_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_value_) -
-    reinterpret_cast<char*>(&_from_)) + sizeof(_value_));
+  ::memcpy(&_value_, &from._value_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_from_) -
+    reinterpret_cast<char*>(&_value_)) + sizeof(_from_));
   // @@protoc_insertion_point(copy_constructor:vcf.Initial_msg.Cmd)
 }
 
 void Initial_msg_Cmd::SharedCtor() {
   _name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&_from_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_value_) -
-      reinterpret_cast<char*>(&_from_)) + sizeof(_value_));
+  ::memset(&_value_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_from_) -
+      reinterpret_cast<char*>(&_value_)) + sizeof(_from_));
 }
 
 Initial_msg_Cmd::~Initial_msg_Cmd() {
@@ -290,9 +290,9 @@ void Initial_msg_Cmd::Clear() {
   (void) cached_has_bits;
 
   _name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&_from_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_value_) -
-      reinterpret_cast<char*>(&_from_)) + sizeof(_value_));
+  ::memset(&_value_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_from_) -
+      reinterpret_cast<char*>(&_value_)) + sizeof(_from_));
   _internal_metadata_.Clear();
 }
 
@@ -336,13 +336,13 @@ bool Initial_msg_Cmd::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 _value = 4;
+      // double _value = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(33u /* 33 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &_value_)));
         } else {
           goto handle_unusual;
@@ -391,9 +391,9 @@ void Initial_msg_Cmd::SerializeWithCachedSizes(
       2, this->_name(), output);
   }
 
-  // int32 _value = 4;
+  // double _value = 4;
   if (this->_value() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->_value(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(4, this->_value(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -426,9 +426,9 @@ void Initial_msg_Cmd::SerializeWithCachedSizes(
         2, this->_name(), target);
   }
 
-  // int32 _value = 4;
+  // double _value = 4;
   if (this->_value() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->_value(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(4, this->_value(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -455,18 +455,16 @@ size_t Initial_msg_Cmd::ByteSizeLong() const {
         this->_name());
   }
 
+  // double _value = 4;
+  if (this->_value() != 0) {
+    total_size += 1 + 8;
+  }
+
   // uint32 _from = 1;
   if (this->_from() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->_from());
-  }
-
-  // int32 _value = 4;
-  if (this->_value() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->_value());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -500,11 +498,11 @@ void Initial_msg_Cmd::MergeFrom(const Initial_msg_Cmd& from) {
 
     _name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from._name_);
   }
-  if (from._from() != 0) {
-    set__from(from._from());
-  }
   if (from._value() != 0) {
     set__value(from._value());
+  }
+  if (from._from() != 0) {
+    set__from(from._from());
   }
 }
 
@@ -534,8 +532,8 @@ void Initial_msg_Cmd::InternalSwap(Initial_msg_Cmd* other) {
   using std::swap;
   _name_.Swap(&other->_name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(_from_, other->_from_);
   swap(_value_, other->_value_);
+  swap(_from_, other->_from_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
@@ -1365,8 +1363,8 @@ Operational_msg::Operational_msg(const Operational_msg& from)
     _msg_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from._msg_);
   }
   ::memcpy(&_seqno_, &from._seqno_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_result_) -
-    reinterpret_cast<char*>(&_seqno_)) + sizeof(_result_));
+    static_cast<size_t>(reinterpret_cast<char*>(&_value_) -
+    reinterpret_cast<char*>(&_seqno_)) + sizeof(_value_));
   // @@protoc_insertion_point(copy_constructor:vcf.Operational_msg)
 }
 
@@ -1374,8 +1372,8 @@ void Operational_msg::SharedCtor() {
   _name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   _msg_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&_seqno_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_result_) -
-      reinterpret_cast<char*>(&_seqno_)) + sizeof(_result_));
+      reinterpret_cast<char*>(&_value_) -
+      reinterpret_cast<char*>(&_seqno_)) + sizeof(_value_));
 }
 
 Operational_msg::~Operational_msg() {
@@ -1411,8 +1409,8 @@ void Operational_msg::Clear() {
   _name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   _msg_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&_seqno_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_result_) -
-      reinterpret_cast<char*>(&_seqno_)) + sizeof(_result_));
+      reinterpret_cast<char*>(&_value_) -
+      reinterpret_cast<char*>(&_seqno_)) + sizeof(_value_));
   _internal_metadata_.Clear();
 }
 
@@ -1484,13 +1482,13 @@ bool Operational_msg::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 _value = 5;
+      // double _value = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(41u /* 41 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &_value_)));
         } else {
           goto handle_unusual;
@@ -1579,9 +1577,9 @@ void Operational_msg::SerializeWithCachedSizes(
       4, this->_name(), output);
   }
 
-  // int32 _value = 5;
+  // double _value = 5;
   if (this->_value() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->_value(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(5, this->_value(), output);
   }
 
   // int32 _result = 6;
@@ -1639,9 +1637,9 @@ void Operational_msg::SerializeWithCachedSizes(
         4, this->_name(), target);
   }
 
-  // int32 _value = 5;
+  // double _value = 5;
   if (this->_value() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->_value(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(5, this->_value(), target);
   }
 
   // int32 _result = 6;
@@ -1712,18 +1710,16 @@ size_t Operational_msg::ByteSizeLong() const {
         this->_to());
   }
 
-  // int32 _value = 5;
-  if (this->_value() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->_value());
-  }
-
   // int32 _result = 6;
   if (this->_result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->_result());
+  }
+
+  // double _value = 5;
+  if (this->_value() != 0) {
+    total_size += 1 + 8;
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -1770,11 +1766,11 @@ void Operational_msg::MergeFrom(const Operational_msg& from) {
   if (from._to() != 0) {
     set__to(from._to());
   }
-  if (from._value() != 0) {
-    set__value(from._value());
-  }
   if (from._result() != 0) {
     set__result(from._result());
+  }
+  if (from._value() != 0) {
+    set__value(from._value());
   }
 }
 
@@ -1809,8 +1805,8 @@ void Operational_msg::InternalSwap(Operational_msg* other) {
   swap(_seqno_, other->_seqno_);
   swap(_from_, other->_from_);
   swap(_to_, other->_to_);
-  swap(_value_, other->_value_);
   swap(_result_, other->_result_);
+  swap(_value_, other->_value_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

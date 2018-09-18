@@ -19,7 +19,7 @@ message Initial_msg // type==0,1,2, serv->app only
         uint32 _from=1;
         string _name=2;
         //uint32 _varid=3;
-        int32  _value=4;
+        double  _value=4;
     }
 
     message Prm
@@ -40,7 +40,7 @@ message Operational_msg // type==3 , for operational phase
     uint32 _from=2;
     uint32 _to=3;
     string _name=4;
-    int32  _value=5;
+    double  _value=5;
     int32  _result=6;//request=0, response=1
     string _msg=7;
 }

@@ -172,25 +172,25 @@ class Initial_msg_Cmd : public ::google::protobuf::Message /* @@protoc_insertion
   ::std::string* release__name();
   void set_allocated__name(::std::string* _name);
 
+  // double _value = 4;
+  void clear__value();
+  static const int kValueFieldNumber = 4;
+  double _value() const;
+  void set__value(double value);
+
   // uint32 _from = 1;
   void clear__from();
   static const int kFromFieldNumber = 1;
   ::google::protobuf::uint32 _from() const;
   void set__from(::google::protobuf::uint32 value);
 
-  // int32 _value = 4;
-  void clear__value();
-  static const int kValueFieldNumber = 4;
-  ::google::protobuf::int32 _value() const;
-  void set__value(::google::protobuf::int32 value);
-
   // @@protoc_insertion_point(class_scope:vcf.Initial_msg.Cmd)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr _name_;
+  double _value_;
   ::google::protobuf::uint32 _from_;
-  ::google::protobuf::int32 _value_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_umsg_2eproto::TableStruct;
 };
@@ -614,17 +614,17 @@ class Operational_msg : public ::google::protobuf::Message /* @@protoc_insertion
   ::google::protobuf::uint32 _to() const;
   void set__to(::google::protobuf::uint32 value);
 
-  // int32 _value = 5;
-  void clear__value();
-  static const int kValueFieldNumber = 5;
-  ::google::protobuf::int32 _value() const;
-  void set__value(::google::protobuf::int32 value);
-
   // int32 _result = 6;
   void clear__result();
   static const int kResultFieldNumber = 6;
   ::google::protobuf::int32 _result() const;
   void set__result(::google::protobuf::int32 value);
+
+  // double _value = 5;
+  void clear__value();
+  static const int kValueFieldNumber = 5;
+  double _value() const;
+  void set__value(double value);
 
   // @@protoc_insertion_point(class_scope:vcf.Operational_msg)
  private:
@@ -635,8 +635,8 @@ class Operational_msg : public ::google::protobuf::Message /* @@protoc_insertion
   ::google::protobuf::uint32 _seqno_;
   ::google::protobuf::uint32 _from_;
   ::google::protobuf::uint32 _to_;
-  ::google::protobuf::int32 _value_;
   ::google::protobuf::int32 _result_;
+  double _value_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_umsg_2eproto::TableStruct;
 };
@@ -718,15 +718,15 @@ inline void Initial_msg_Cmd::set_allocated__name(::std::string* _name) {
   // @@protoc_insertion_point(field_set_allocated:vcf.Initial_msg.Cmd._name)
 }
 
-// int32 _value = 4;
+// double _value = 4;
 inline void Initial_msg_Cmd::clear__value() {
   _value_ = 0;
 }
-inline ::google::protobuf::int32 Initial_msg_Cmd::_value() const {
+inline double Initial_msg_Cmd::_value() const {
   // @@protoc_insertion_point(field_get:vcf.Initial_msg.Cmd._value)
   return _value_;
 }
-inline void Initial_msg_Cmd::set__value(::google::protobuf::int32 value) {
+inline void Initial_msg_Cmd::set__value(double value) {
   
   _value_ = value;
   // @@protoc_insertion_point(field_set:vcf.Initial_msg.Cmd._value)
@@ -1050,15 +1050,15 @@ inline void Operational_msg::set_allocated__name(::std::string* _name) {
   // @@protoc_insertion_point(field_set_allocated:vcf.Operational_msg._name)
 }
 
-// int32 _value = 5;
+// double _value = 5;
 inline void Operational_msg::clear__value() {
   _value_ = 0;
 }
-inline ::google::protobuf::int32 Operational_msg::_value() const {
+inline double Operational_msg::_value() const {
   // @@protoc_insertion_point(field_get:vcf.Operational_msg._value)
   return _value_;
 }
-inline void Operational_msg::set__value(::google::protobuf::int32 value) {
+inline void Operational_msg::set__value(double value) {
   
   _value_ = value;
   // @@protoc_insertion_point(field_set:vcf.Operational_msg._value)
