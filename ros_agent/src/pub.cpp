@@ -123,22 +123,23 @@ int main(int argc, char **argv)
 
         readHdr(hdr, buffer);
 
-        if (hdr[0] == 1)
-        {
+      
             Operational_msg *oper_msg;
 
             //printf("#############It's Operational_msg################\n\t");
             //printf("\tin recv in if: client_idx = %d cliets[*client_idx].sockfd= %d \n", client_idx, clients[client_idx].sockfd);
             oper_msg = operational_ReadBody(sockfd, hdr);
-            if (strcmp(oper_msg->_name().c_str(), "Left_Wheel_Pose") == 0)
+            if (strcmp(oper_msg->_name().c_str(), "Left_Wheel") == 0)
             {
                 left_pose = oper_msg->_value();
                 msg_cnt++;
+                printf("GOT Left Wheel POs : %d\n",(int)oper_msg->_value());
             }
-            else if (strcmp(oper_msg->_name().c_str(), "Right_Wheel_Pose") == 0)
+            else if (strcmp(oper_msg->_name().c_str(), "Right_Wheel") == 0)
             {
                 right_pose = oper_msg->_value();
                 msg_cnt++;
+                printf("GOT Right Wheel POs : %d\n",(int)oper_msg->_value());
             }
             else
             {
@@ -149,11 +150,6 @@ int main(int argc, char **argv)
             
             //printf("\tbefor PostOperationalMsg\n client_idx = %d\n", client_idx);
             //send_thread[client_idx]->PostOperationalMsg((const Operational_msg *)umsg);
-        }
-
-        else
-        {
-            printf("******** Unknown type **********\n");
-        }
+      
     }
 }
