@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include "ros/ros.h"
-#include "ros_proxy/umsg.pb.h"
+#include "ros_agent/umsg.pb.h"
 #include <geometry_msgs/TwistStamped.h>
 
 
@@ -29,7 +29,7 @@ char message[BUF_SIZE] ;
 int idx=0;
 int halfsd;
 int seq_num=0;
-void send_msg()
+void send_msg_2_non_ros()
 {
     int siz;
     char *pkt;
@@ -49,33 +49,33 @@ void send_msg()
     usleep(1);
 }
 
-void twistCallback(const geometry_msgs::TwistStampedConstPtr &input_msg)
+void fromRosCallback(const geometry_msgs::TwistStampedConstPtr &input_msg)
 {
     oper_msg.set__seqno(seq_num++);
     oper_msg.set__to(1);
     oper_msg.set__name("Target_Velocity");
     oper_msg.set__value(input_msg->twist.linear.x);
-    oper_msg.set__msg("from Autoware");
+    oper_msg.set__msg("from ROS");
     oper_msg.set__from(0);
     oper_msg.set__result(1);
-    send_msg();
+    send_msg_2_non_ros();
 
     oper_msg.set__seqno(seq_num++);
     oper_msg.set__to(1);
     oper_msg.set__name("Target_Angular");
     oper_msg.set__value(input_msg->twist.angular.z);
-    oper_msg.set__msg("from Autoware");
+    oper_msg.set__msg("from ROS");
     oper_msg.set__from(0);
     oper_msg.set__result(1);
-    send_msg();
+    send_msg_2_non_ros();
 }
 
 int main(int argc, char**argv)
 {
-    ros::init(argc, argv,"ros_proxy_node");
+    ros::init(argc, argv,"ros_agent_sub");
     ros::NodeHandle nh;
     
-    ros::Subscriber proxy_sub = nh.subscribe("/twist_cmd",1,twistCallback);
+    ros::Subscriber agent_sub = nh.subscribe("/cmd_vel", 1, fromRosCallback);
     
     struct sockaddr_in server_addr;
 
@@ -92,7 +92,7 @@ int main(int argc, char**argv)
         return 0;
     }
     
-    printf("connected...\n");
+    printf("subscriber connected...\n");
     
     ros::spin();
 

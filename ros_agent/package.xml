@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>ros_proxy</name>
+  <name>ros_agent</name>
   <version>0.0.0</version>
-  <description>The ros_proxy package</description>
+  <description>The ros_agent package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/ros_proxy</url> -->
+  <!-- <url type="website">http://wiki.ros.org/ros_agent</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
@@ -58,7 +58,7 @@
   <run_depend>protobuf</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>geometry_msgs</run_depend>
-
+  
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->

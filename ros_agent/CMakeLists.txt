@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ros_proxy)
+project(ros_agent)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -8,17 +8,22 @@ add_compile_options(-std=c++11)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 
+
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   geometry_msgs
+  message_generation
 )
+add_message_files(FILES motorPose.msg)
+
+generate_messages(DEPENDENCIES std_msgs)
 
 find_package(Protobuf REQUIRED)
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES ros_proxy
+  LIBRARIES ros_agent
   CATKIN_DEPENDS roscpp std_msgs geometry_msgs
   DEPENDS system_lib
 )
@@ -30,15 +35,33 @@ include_directories(
 )
 
 add_library(umsg_protobuf
-include/ros_proxy/umsg.pb.cc
+include/ros_agent/umsg.pb.cc
 )
 
-add_executable(ros_proxy_node src/main.cpp)
-
-target_link_libraries(ros_proxy_node
+add_executable(ros_agent_sub src/sub.cpp)
+target_link_libraries(ros_agent_sub
 ${catkin_LIBRARIES}
 umsg_protobuf
 ${PROTOBUF_LIBRARIES}
+)
+
+add_executable(ros_agent_pub src/pub.cpp)
+target_link_libraries(ros_agent_pub
+${catkin_LIBRARIES}
+umsg_protobuf
+${PROTOBUF_LIBRARIES}
+)
+
+
+# Compile as C++11, supported in ROS Kinetic and newer
+# add_compile_options(-std=c++11)
+
+## Find catkin macros and libraries
+## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+## is used, also find other catkin packages
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -98,7 +121,7 @@ ${PROTOBUF_LIBRARIES}
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
+#   std_msgs
 # )
 
 ################################################
@@ -130,7 +153,12 @@ ${PROTOBUF_LIBRARIES}
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-
+catkin_package(
+#  INCLUDE_DIRS include
+#  LIBRARIES ros_agent
+#  CATKIN_DEPENDS roscpp std_msgs
+#  DEPENDS system_lib
+)
 
 ###########
 ## Build ##
@@ -138,11 +166,14 @@ ${PROTOBUF_LIBRARIES}
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-
+include_directories(
+# include
+  ${catkin_INCLUDE_DIRS}
+)
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/ros_proxy.cpp
+#   src/${PROJECT_NAME}/ros_agent.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -153,7 +184,7 @@ ${PROTOBUF_LIBRARIES}
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/ros_proxy_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/ros_agent_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -210,7 +241,7 @@ ${PROTOBUF_LIBRARIES}
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_ros_proxy.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_ros_agent.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
