@@ -131,15 +131,15 @@ int main(int argc, char **argv)
             oper_msg = operational_ReadBody(sockfd, hdr);
             if (strcmp(oper_msg->_name().c_str(), "Left_Wheel") == 0)
             {
-                left_pose = oper_msg->_value();
+                left_pose = (int)(oper_msg->_value());
                 msg_cnt++;
-                printf("GOT Left Wheel POs : %d\n",(int)oper_msg->_value());
+                printf("GOT Left Wheel Pos : %d\n",(int)(oper_msg->_value()));
             }
             else if (strcmp(oper_msg->_name().c_str(), "Right_Wheel") == 0)
             {
-                right_pose = oper_msg->_value();
+                right_pose = (int)(oper_msg->_value());
                 msg_cnt++;
-                printf("GOT Right Wheel POs : %d\n",(int)oper_msg->_value());
+                printf("GOT Right Wheel Pos : %d\n",(int)(oper_msg->_value()));
             }
             else
             {

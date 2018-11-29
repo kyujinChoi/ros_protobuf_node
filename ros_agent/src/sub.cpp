@@ -60,6 +60,7 @@ void fromRosCallback(const geometry_msgs::TwistStampedConstPtr &input_msg)
     oper_msg.set__result(1);
     send_msg_2_non_ros();
 
+
     oper_msg.set__seqno(seq_num++);
     oper_msg.set__to(1);
     oper_msg.set__name("Target_Angular");
