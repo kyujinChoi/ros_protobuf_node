@@ -28,8 +28,8 @@ void sendmsg()
     int bytecount;
     int i = 0;
 
-    ROS_INFO("Sending v : %lf\n", send_buffer[0]);
-    ROS_INFO("Sending w : %lf\n", send_buffer[1]);
+    printf("Sending target_V : %lf\n", send_buffer[0]);
+    printf("Sending target_W : %lf\n", send_buffer[1]);
     //printf("currnet vel : %lf\n",convert_mps_to_kmh(buffer[2]));
 
     if ((bytecount = send(sockfd, send_buffer, sizeof(send_buffer), 0)) == -1)
@@ -85,7 +85,7 @@ int main(int argc, char **argv)
         }
         msg.cur_vel = recv_buffer[0];
         agent_pub.publish(msg);
-        ROS_INFO("\tReceiving.. current_V : %lf\n",msg.cur_vel);
+        printf("\tReceiving current_V : %lf, %lf\n",msg.cur_vel,convert_mps_to_kmh(msg.cur_vel));
     }
     
 
