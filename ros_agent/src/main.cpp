@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include "ros/ros.h"
+#include "ros_agent/curVelocity.h"
 #include <geometry_msgs/TwistStamped.h>
 
 using namespace std;
@@ -27,8 +28,8 @@ void sendmsg()
     int bytecount;
     int i = 0;
 
-    printf("target vel : %lf\n", send_buffer[0]);
-    printf("target omega : %lf\n", send_buffer[1]);
+    ROS_INFO("Sending v : %lf\n", send_buffer[0]);
+    ROS_INFO("Sending w : %lf\n", send_buffer[1]);
     //printf("currnet vel : %lf\n",convert_mps_to_kmh(buffer[2]));
 
     if ((bytecount = send(sockfd, send_buffer, sizeof(send_buffer), 0)) == -1)
@@ -57,8 +58,8 @@ int main(int argc, char **argv)
 
     ros::Subscriber agent_sub = nh.subscribe("/twist_cmd", 1, twistCallback);
     //ros::Subscriber agent_sub1 = nh.subscribe("/current_velocity", 1, curVelCallback);
-    //ros::Publisher agent_pub = nh.advertise<ros_agent::motorPose>("/motor_pos", 100);
-
+    ros::Publisher agent_pub = nh.advertise<ros_agent::curVelocity>("/my_cur_vel", 100);
+    ros_agent::curVelocity msg;
     struct sockaddr_in server_addr;
 
     sockfd = socket(PF_INET, SOCK_STREAM, 0);
@@ -82,8 +83,9 @@ int main(int argc, char **argv)
         {
             fprintf(stderr, "Error receiving data %d\n", errno);
         }
-        //? = recv_buffer[0];
-        //agent_pub.publish()
+        msg.cur_vel = recv_buffer[0];
+        agent_pub.publish(msg);
+        ROS_INFO("\tReceiving.. current_V : %lf\n",msg.cur_vel);
     }
     
 

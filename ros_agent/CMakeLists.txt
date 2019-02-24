@@ -11,22 +11,26 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   geometry_msgs
+  message_generation
+)
+add_message_files(FILES curVelocity.msg)
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+catkin_package(
+  INCLUDE_DIRS include
+  LIBRARIES ros_agent
+  CATKIN_DEPENDS roscpp std_msgs geometry_msgs
+  DEPENDS system_lib
+)
+include_directories(
+  ${catkin_INCLUDE_DIRS}
 )
 
-catkin_package(
-        INCLUDE_DIRS include
-        LIBRARIES ros_proxy
-        CATKIN_DEPENDS roscpp std_msgs geometry_msgs
-        DEPENDS system_lib
-        )
-include_directories(
-        ${catkin_INCLUDE_DIRS}
-        )
 add_executable(ros_agent_node src/main.cpp)
+target_link_libraries(ros_agent_node ${catkin_LIBRARIES})
 
-target_link_libraries(ros_agent_node
-        ${catkin_LIBRARIES}
-        )
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
