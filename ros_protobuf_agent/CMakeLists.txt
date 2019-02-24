@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ros_agent)
+project(ros_protobuf_agent)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -23,7 +23,7 @@ find_package(Protobuf REQUIRED)
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES ros_agent
+  LIBRARIES ros_protobuf_agent
   CATKIN_DEPENDS roscpp std_msgs geometry_msgs
   DEPENDS system_lib
 )
@@ -35,18 +35,18 @@ include_directories(
 )
 
 add_library(umsg_protobuf
-include/ros_agent/umsg.pb.cc
+include/ros_protobuf_agent/umsg.pb.cc
 )
 
-add_executable(ros_agent_sub src/sub.cpp)
-target_link_libraries(ros_agent_sub
+add_executable(ros_protobuf_agent_sub src/sub.cpp)
+target_link_libraries(ros_protobuf_agent_sub
 ${catkin_LIBRARIES}
 umsg_protobuf
 ${PROTOBUF_LIBRARIES}
 )
 
-add_executable(ros_agent_pub src/pub.cpp)
-target_link_libraries(ros_agent_pub
+add_executable(ros_protobuf_agent_pub src/pub.cpp)
+target_link_libraries(ros_protobuf_agent_pub
 ${catkin_LIBRARIES}
 umsg_protobuf
 ${PROTOBUF_LIBRARIES}

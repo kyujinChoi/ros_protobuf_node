@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include "ros/ros.h"
-#include "ros_agent/umsg.pb.h"
+#include "ros_protobuf_agent/umsg.pb.h"
 #include <geometry_msgs/TwistStamped.h>
 
 
@@ -73,7 +73,7 @@ void fromRosCallback(const geometry_msgs::TwistStampedConstPtr &input_msg)
 
 int main(int argc, char**argv)
 {
-    ros::init(argc, argv,"ros_agent_sub");
+    ros::init(argc, argv,"ros_protobuf_agent_sub");
     ros::NodeHandle nh;
     
     ros::Subscriber agent_sub = nh.subscribe("/cmd_vel", 1, fromRosCallback);

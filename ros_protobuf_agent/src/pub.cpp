@@ -8,8 +8,8 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include "ros/ros.h"
-#include "ros_agent/umsg.pb.h"
-#include "ros_agent/motorPose.h"
+#include "ros_protobuf_agent/umsg.pb.h"
+#include "ros_protobuf_agent/motorPose.h"
 #include <geometry_msgs/TwistStamped.h>
 
 #include <google/protobuf/message.h>
@@ -77,10 +77,10 @@ int main(int argc, char **argv)
 
     memset(buffer, '\0', 2);
 
-    ros::init(argc, argv, "ros_agent_pub");
+    ros::init(argc, argv, "ros_protobuf_agent_pub");
     ros::NodeHandle nh;
 
-    ros::Publisher agent_pub = nh.advertise<ros_agent::motorPose>("/motor_pos", 100);
+    ros::Publisher agent_pub = nh.advertise<ros_protobuf_agent::motorPose>("/motor_pos", 100);
 
     struct sockaddr_in server_addr;
 
@@ -104,7 +104,7 @@ int main(int argc, char **argv)
     {
         if (msg_cnt == 2)
         {
-            ros_agent::motorPose msg;
+            ros_protobuf_agent::motorPose msg;
             msg.left_pos = left_pose;
             msg.right_pos = right_pose;
             agent_pub.publish(msg);

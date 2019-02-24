@@ -1,0 +1,4 @@
+<launch>
+	<node name ="ros_protobuf_agent_pub" pkg="ros_protobuf_agent" type="ros_protobuf_agent_pub" output="screen"/>
+    <node name ="ros_protobuf_agent_sub" pkg="ros_protobuf_agent" type="ros_protobuf_agent_sub" output="screen"/>
+</launch>
