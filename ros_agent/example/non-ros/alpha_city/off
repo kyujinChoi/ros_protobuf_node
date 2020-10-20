@@ -1,0 +1,18 @@
+#!/bin/bash
+gpio -g mode 12 out
+gpio -g mode 16 out
+gpio -g mode 18 out
+gpio -g mode 20 out
+gpio -g mode 21 out
+gpio -g mode 23 out
+gpio -g mode 24 out
+gpio -g mode 25 out
+gpio -g write 12 1
+gpio -g write 16 1
+gpio -g write 18 1
+gpio -g write 20 1
+gpio -g write 21 1
+gpio -g write 23 1
+gpio -g write 24 1
+gpio -g write 25 1
+gpio readall

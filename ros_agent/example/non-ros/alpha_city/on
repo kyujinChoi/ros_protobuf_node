@@ -1,0 +1,10 @@
+#!/bin/bash
+gpio -g write 12 0
+gpio -g write 16 0
+gpio -g write 18 0
+gpio -g write 20 0
+gpio -g write 21 0
+gpio -g write 23 0
+gpio -g write 24 0
+gpio -g write 25 0
+gpio readall
