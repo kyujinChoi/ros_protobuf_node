@@ -63,7 +63,7 @@ int main(int argc, char **argv)
     signal(SIGINT, intHandler);
     server_addr.sin_family = PF_INET;
     server_addr.sin_port = htons(9000);
-    inet_aton("192.168.0.4", &server_addr.sin_addr);
+    inet_aton("192.168.1.32", &server_addr.sin_addr);
     memset(&(server_addr.sin_zero), 0, 8);
 
     if (connect(sockfd, (struct sockaddr *)&server_addr, sizeof(struct sockaddr)) == -1)
@@ -99,8 +99,9 @@ int main(int argc, char **argv)
             printf("\tReceiving true\n");
             ackMsg();
 
-            ss << "y";
-            msg.data = ss.str();
+            
+            // ss << "y";
+            msg.data = ss.str(send_buffer);
             agent_pub.publish(msg);
         }
         if(strcmp(recv_buffer, "n") == 0)
@@ -109,8 +110,8 @@ int main(int argc, char **argv)
             printf("\tReceiving false\n");
             ackMsg();
 
-            ss << "n";
-            msg.data = ss.str();
+            // ss << "n";
+            msg.data = ss.str(send_buffer);
             agent_pub.publish(msg);
         }
     }
