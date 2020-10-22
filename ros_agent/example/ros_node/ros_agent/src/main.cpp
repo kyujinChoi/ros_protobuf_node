@@ -9,7 +9,6 @@
 #include <arpa/inet.h>
 #include <signal.h>
 #include "ros/ros.h"
-// #include "ros_agent/curVelocity.h"
 #include "std_msgs/String.h"
 #include <sstream>
 
@@ -34,7 +33,7 @@ void ackMsg()
 
     printf("ACK send_buffer[0] : %c\n", send_buffer[0]);
 
-    if ((bytecount = send(sockfd, send_buffer, strlen(send_buffer)+1, 0)) == -1)
+    if ((bytecount = send(sockfd, send_buffer, BUF_SIZE, 0)) == -1)
     {
         fprintf(stderr, "Error sending data %d\n", errno);
     }
@@ -93,25 +92,31 @@ int main(int argc, char **argv)
             close(sockfd);
             return 0;
         }
-        if(strcmp(recv_buffer, "y") == 0)
+        else
         {
+            printf("received %c!\n", recv_buffer[0]);
+            
+        }
+        if(recv_buffer[0] == 'y')
+        {
+            flushBuffer();
             sprintf(send_buffer, "y");
             printf("\tReceiving true\n");
             ackMsg();
 
-            
-            // ss << "y";
-            msg.data = ss.str(send_buffer);
+            ss << "y";
+            msg.data = ss.str();
             agent_pub.publish(msg);
         }
-        if(strcmp(recv_buffer, "n") == 0)
+        if(recv_buffer[0] == 'n')
         {
+            flushBuffer();
             sprintf(send_buffer, "n");
             printf("\tReceiving false\n");
             ackMsg();
 
-            // ss << "n";
-            msg.data = ss.str(send_buffer);
+            ss << "n";
+            msg.data = ss.str();
             agent_pub.publish(msg);
         }
     }
