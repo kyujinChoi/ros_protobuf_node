@@ -9,8 +9,10 @@
 #include <arpa/inet.h>
 #include <signal.h>
 #include "ros/ros.h"
-#include "ros_agent/curVelocity.h"
-#include <geometry_msgs/TwistStamped.h>
+// #include "ros_agent/curVelocity.h"
+#include "std_msgs/String.h"
+#include <sstream>
+
 #define BUF_SIZE 10
 using namespace std;
 
@@ -25,19 +27,19 @@ void flushBuffer()
         send_buffer[i] = '\0';
     }
 }
-void sendmsg()
+void ackMsg()
 {
     int bytecount;
     int i = 0;
 
-    printf("Sending send_buffer[0] : %c\n", send_buffer[0]);
-    printf("Sending send_buffer[1] : %c\n", send_buffer[1]);
+    printf("ACK send_buffer[0] : %c\n", send_buffer[0]);
 
     if ((bytecount = send(sockfd, send_buffer, strlen(send_buffer)+1, 0)) == -1)
     {
         fprintf(stderr, "Error sending data %d\n", errno);
     }
 }
+
 void intHandler(int sig)
 {
     printf("SIG INT CALLED\n");
@@ -50,6 +52,10 @@ int main(int argc, char **argv)
     int bytecount;
     ros::init(argc, argv, "ros_agent_node");
     ros::NodeHandle nh;
+    std_msgs::String msg;
+    std::stringstream ss;
+
+    ros::Publisher agent_pub = nh.advertise<std_msgs::String>("/btn_pressed", 100);
 
     struct sockaddr_in server_addr;
 
@@ -91,13 +97,21 @@ int main(int argc, char **argv)
         {
             sprintf(send_buffer, "y");
             printf("\tReceiving true\n");
-            sendmsg();
+            ackMsg();
+
+            ss << "y";
+            msg.data = ss.str();
+            agent_pub.publish(msg);
         }
         if(strcmp(recv_buffer, "n") == 0)
         {
             sprintf(send_buffer, "n");
             printf("\tReceiving false\n");
-            sendmsg();
+            ackMsg();
+
+            ss << "n";
+            msg.data = ss.str();
+            agent_pub.publish(msg);
         }
     }
     close(sockfd);
